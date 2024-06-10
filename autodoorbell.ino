@@ -1,6 +1,9 @@
 /*
-Distance sensor variant
+Project Title: Automatic doorbell
 Author: Dan Shan
+a doorbell that rings when something is within 5 cm away from it
+if distance is over 5 cm but less than 50 the lights will be turned on 
+on and "incoming!" will be displayed indicated something is approaching or leaving
 trig pin: digital pin 12
 echo pin: digital pin 13
 LEDs: digital pins 2 through 13
@@ -41,14 +44,20 @@ void setup() {
 void blink(int dis){
   // If the distance is less than 6
   if(dis<6){
-    // Print "Too close!" on LCD and Serial Monitor
-    lcd.print("Too close!");
-    Serial.print("Too close!");
-    // digitalWrite(2, HIGH);
+    // Print "Vistor detected!" on LCD and Serial Monitor
+    lcd.print("Visitor detected!");
+    Serial.println("Visitor detected!");
+  }
+  else if(dis<50){
+    lcd.print("Incoming!");
+    Serial.println("Incoming!");
+  }
+  else{
+    lcd.print("All clear!");
   }
 
   // Turn on LEDs based on distance
-  for(int i=11;i<52;i+=5){
+  for(int i=11;i<52;i+=5){ // start at 6 for buzzer otherwise 11 to skip the buzzer
     if(dis<i) digitalWrite(i/5+1,HIGH);
   }
 
